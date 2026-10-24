@@ -12,7 +12,7 @@ public class SuperObject {
     public int worldX;
     public int worldY;
 
-    public void draw(Graphics2D g2, GamePanel gamePanel, ) {
-        g2.drawImage(image, worldX, worldY, null);
+    public void draw(Graphics2D g2, GamePanel gamePanel) {
+        g2.drawImage(image, worldX, worldY, gamePanel.tileSize, gamePanel.tileSize, null);
     }
 }

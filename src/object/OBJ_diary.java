@@ -13,7 +13,7 @@ public class OBJ_diary extends SuperObject{
     public OBJ_diary() {
         name = "Closed Diary";
         try{
-            image  = ImageIO.read(getClass().getResource("/object/closed-diary.png"));
+            image  = ImageIO.read(getClass().getResource("/clues/closed-diary.png"));
         }catch(IOException e){
             e.printStackTrace();
         }
