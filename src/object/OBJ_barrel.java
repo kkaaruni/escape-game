@@ -9,7 +9,6 @@ public class OBJ_barrel extends SuperObject
     {
         name = "barrel";
         description = "A normal barrel. Nothing unusual.";
-        isClue = false;
         try {
             image = ImageIO.read(getClass().getResourceAsStream("/clues/barrel.png"));
         } catch (IOException e) {}

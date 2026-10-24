@@ -122,12 +122,9 @@ public class GamePanel extends JPanel implements Runnable{
            int closeY = y + 10;
 
 
-
            g2.setColor(Color.WHITE);
            g2.setFont(new Font("Arial", Font.BOLD, 20));
            g2.drawString("X", closeX + 8, closeY + 22);
-
-
 
             // Border
             g2.setColor(Color.WHITE);
