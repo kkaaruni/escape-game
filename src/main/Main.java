@@ -4,11 +4,13 @@ import javax.swing.*;
 
 public class Main {
     public static void main(String[] args) {
-       JFrame frame = new JFrame();
-       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-       frame.setSize(800,600);
-       frame.setVisible(true);
-       frame.setTitle("Escape Game");
-       frame.setLocationRelativeTo(null);
+
+       JFrame window = new JFrame();
+       window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       window.setResizable(false);
+       window.setTitle("Escape Game");
+
+       window.setLocationRelativeTo(null);
+       window.setVisible(true);
     }
 }
