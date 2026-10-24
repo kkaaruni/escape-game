@@ -30,6 +30,16 @@ public class AssetSetter {
         gamePanel.object[3].worldY = 3 * gamePanel.tileSize;
         gamePanel.object[3].collision = true;
 
+        gamePanel.object[4] = new OBJ_binary();
+        gamePanel.object[4].worldX = 6 * gamePanel.tileSize;
+        gamePanel.object[4].worldY = 11 * gamePanel.tileSize;
+        gamePanel.object[4].collision = true;
+
+        gamePanel.object[5] = new OBJ_hex();
+        gamePanel.object[5].worldX = 15 * gamePanel.tileSize;
+        gamePanel.object[5].worldY = 8 * gamePanel.tileSize;
+        gamePanel.object[5].collision = true;
+
 
     }
 }

@@ -41,6 +41,30 @@ public class KeyHandler implements KeyListener {
                 gp.gameState = gp.playState;
             }
         }
+        else if (gp.gameState == gp.codeEntryState) {
+            char c = e.getKeyChar();
+
+            if (c >= '0' && c <= '9' && gp.ui.codeInput.length() < 4) {
+                gp.ui.codeInput += c;
+                gp.ui.codeMessage = "";
+            }
+            if (code == KeyEvent.VK_BACK_SPACE && gp.ui.codeInput.length() > 0) {
+                gp.ui.codeInput = gp.ui.codeInput.substring(0, gp.ui.codeInput.length() - 1);
+            }
+            if (code == KeyEvent.VK_ENTER) {
+                if (gp.ui.codeInput.equals("1209")) {
+                    gp.toyBoxUnlocked = true;
+                    gp.ui.toyCommandNum = 0;
+                    gp.gameState = gp.toyChoiceState;   // "Which toy do you look at?"
+                } else {
+                    gp.ui.codeMessage = "Wrong code.";
+                    gp.ui.codeInput = "";
+                }
+            }
+            if (code == KeyEvent.VK_ESCAPE) {
+                gp.gameState = gp.playState;
+            }
+        }
     }
 
     @Override

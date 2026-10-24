@@ -11,6 +11,8 @@ public class UI {
     public int toyCommandNum = 0;
     public int selectedToy = 0;
     public String currentMessage = "";
+    public String codeInput = "";
+    public String codeMessage = "";
 
     BufferedImage[] toyImages = new BufferedImage[3];
     String[] toyNames = {"Bear", "Duck", "Horse"};
@@ -49,6 +51,30 @@ public class UI {
             }
             g2.setFont(g2.getFont().deriveFont(14F));
             g2.drawString("[Esc] Close", x + 30, y + h - 15);
+        }
+
+        if (gp.gameState == gp.codeEntryState) {
+            int w = 400, h = 180;
+            int x = (gp.screenWidth - w) / 2, y = (gp.screenHeight - h) / 2;
+            g2.setColor(new Color(0, 0, 0, 200));
+            g2.fillRoundRect(x, y, w, h, 25, 25);
+
+            g2.setColor(Color.WHITE);
+            g2.setFont(g2.getFont().deriveFont(20F));
+            g2.drawString("The box is locked. Enter the code:", x + 30, y + 45);
+
+            // show 4 slots, filled with typed digits
+            g2.setFont(g2.getFont().deriveFont(36F));
+            for (int i = 0; i < 4; i++) {
+                String c = i < codeInput.length() ? String.valueOf(codeInput.charAt(i)) : "_";
+                g2.drawString(c, x + 110 + i * 50, y + 100);
+            }
+
+            g2.setFont(g2.getFont().deriveFont(16F));
+            g2.setColor(Color.RED);
+            g2.drawString(codeMessage, x + 30, y + 130);
+            g2.setColor(Color.WHITE);
+            g2.drawString("[Enter] Confirm   [Backspace] Delete   [Esc] Cancel", x + 30, y + h - 15);
         }
 
         if (gp.gameState == gp.toyChoiceState) {

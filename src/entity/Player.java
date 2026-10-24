@@ -59,8 +59,14 @@ public class Player extends Entity {
 
         switch (name) {
             case "Toy box":
-                gamePanel.ui.toyCommandNum = 0;
-                gamePanel.gameState = gamePanel.toyChoiceState;
+                if (gamePanel.toyBoxUnlocked) {
+                    gamePanel.ui.toyCommandNum = 0;
+                    gamePanel.gameState = gamePanel.toyChoiceState;
+                } else {
+                    gamePanel.ui.codeInput = "";
+                    gamePanel.ui.codeMessage = "";
+                    gamePanel.gameState = gamePanel.codeEntryState;
+                }
                 break;
             case "Post It Note":
                 gamePanel.ui.currentMessage = "The note reads:\n\"Buy Oliver a toy horse.\"";
