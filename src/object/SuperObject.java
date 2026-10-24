@@ -13,8 +13,6 @@ public class SuperObject {
     public int worldY;
     public Rectangle solidArea = new Rectangle(0, 0, 48, 48);
 
-    public String description = "none";
-
     public void draw(Graphics2D g2, GamePanel gamePanel) {
         g2.drawImage(image, worldX, worldY, gamePanel.tileSize, gamePanel.tileSize, null);
     }

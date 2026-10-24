@@ -7,7 +7,6 @@ import java.util.Objects;
 public class OBJ_first_aid_kit extends SuperObject {
     public OBJ_first_aid_kit() {
         name = "first_aid_kit";
-        description = "Am I hurt? Nah.";
         try{
             image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/clues/first-aid-kit.png")));
         }catch(IOException e){
