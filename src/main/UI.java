@@ -10,6 +10,7 @@ public class UI {
     GamePanel gp;
     public int toyCommandNum = 0;
     public int selectedToy = 0;
+    public String currentMessage = "";
 
     BufferedImage[] toyImages = new BufferedImage[3];
     String[] toyNames = {"Bear", "Duck", "Horse"};
@@ -33,6 +34,23 @@ public class UI {
     }
 
     public void draw(Graphics2D g2) {
+        if (gp.gameState == gp.messageState) {
+            int w = 450, h = 140;
+            int x = (gp.screenWidth - w) / 2, y = (gp.screenHeight - h) / 2;
+            g2.setColor(new Color(0, 0, 0, 200));
+            g2.fillRoundRect(x, y, w, h, 25, 25);
+
+            g2.setColor(Color.WHITE);
+            g2.setFont(g2.getFont().deriveFont(24F));
+            int ty = y + 50;
+            for (String line : currentMessage.split("\n")) {
+                g2.drawString(line, x + 30, ty);
+                ty += 28;
+            }
+            g2.setFont(g2.getFont().deriveFont(14F));
+            g2.drawString("[Esc] Close", x + 30, y + h - 15);
+        }
+
         if (gp.gameState == gp.toyChoiceState) {
             int w = 400, h = 220;
             int x = (gp.screenWidth - w) / 2, y = (gp.screenHeight - h) / 2;
@@ -51,7 +69,7 @@ public class UI {
         if (gp.gameState == gp.toyViewState) {
             int w = 500, h = 400;
             int x = (gp.screenWidth - w) / 2, y = (gp.screenHeight - h) / 2;
-            g2.setColor(new Color(0, 0, 0, 220));
+            g2.setColor(new Color(0, 0, 0, 200));
             g2.fillRoundRect(x, y, w, h, 25, 25);
 
             g2.drawImage(toyImages[selectedToy], x + (w - 200) / 2, y + 20, 200, 200, null);

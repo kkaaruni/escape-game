@@ -46,17 +46,29 @@ public class Player extends Entity {
     }
 
     public void interactWithObject(int i) {
-        if (i != 999) {
-            // constant first, so it won't crash if an object has no name set
-            if ("Toy box".equals(gamePanel.object[i].name)) {
-                keyHandler.upPressed = false;
-                keyHandler.downPressed = false;
-                keyHandler.leftPressed = false;
-                keyHandler.rightPressed = false;
+        if (i == 999) return;
 
+        String name = gamePanel.object[i].name;
+        if (name == null) return;
+
+        // stop the player walking while a screen is open
+        keyHandler.upPressed = false;
+        keyHandler.downPressed = false;
+        keyHandler.leftPressed = false;
+        keyHandler.rightPressed = false;
+
+        switch (name) {
+            case "Toy box":
                 gamePanel.ui.toyCommandNum = 0;
                 gamePanel.gameState = gamePanel.toyChoiceState;
-            }
+                break;
+            case "Post It Note":
+                gamePanel.ui.currentMessage = "The note reads:\n\"Buy Oliver a toy horse.\"";
+                gamePanel.gameState = gamePanel.messageState;
+                break;
+            default:
+                // other objects: no keys cleared needed, but harmless
+                break;
         }
     }
 

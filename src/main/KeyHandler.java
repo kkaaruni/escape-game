@@ -36,6 +36,11 @@ public class KeyHandler implements KeyListener {
         else if (gp.gameState == gp.toyViewState) {
             if (code == KeyEvent.VK_ESCAPE) gp.gameState = gp.toyChoiceState;
         }
+        else if (gp.gameState == gp.messageState) {
+            if (code == KeyEvent.VK_ESCAPE) {
+                gp.gameState = gp.playState;
+            }
+        }
     }
 
     @Override
