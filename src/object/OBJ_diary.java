@@ -8,6 +8,8 @@ public class OBJ_diary extends SuperObject{
 
     public OBJ_diary() {
         name = "Closed Diary";
+        description = "On the table, you find a mysterious diary and cautiously read\n"+"through it";
+        isClue = true;
         try{
             image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/clues/closed-diary.png")));
         }catch(IOException e){

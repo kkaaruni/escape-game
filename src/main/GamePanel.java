@@ -32,13 +32,15 @@ public class GamePanel extends JPanel implements Runnable{
     public AssetSetter assetSetter = new AssetSetter(this);
     MouseHandler mouseHandler = new MouseHandler(this);
 
+    public boolean dialogueOn = false;
+    public String dialogueText = "";
+
     public GamePanel() {
         this.setPreferredSize( new Dimension( screenWidth, screenHeight ) );
         this.setBackground( Color.black );
         this.setDoubleBuffered(true);
         this.addKeyListener(keyHandler);
         this.addMouseListener(mouseHandler);
-        this.addMouseMotionListener(mouseHandler);
         this.setFocusable( true );
     }
 
@@ -96,6 +98,53 @@ public class GamePanel extends JPanel implements Runnable{
         // player
         player.draw(g2);
 
+        if (dialogueOn) {
+            drawDialogueScreen(g2);
+        }
+
         g2.dispose();
+    }
+
+    private void drawDialogueScreen(Graphics2D g2) {
+
+            int x = tileSize;
+            int y = tileSize * 8;
+            int width = screenWidth - tileSize * 2;
+            int height = tileSize * 3;
+
+            // Dialogue box background
+            g2.setColor(Color.DARK_GRAY);
+            g2.fillRoundRect(x, y, width, height, 25, 25);
+
+           // Close button
+           int closeSize = 30;
+           int closeX = x + width - closeSize - 10;
+           int closeY = y + 10;
+
+
+
+           g2.setColor(Color.WHITE);
+           g2.setFont(new Font("Arial", Font.BOLD, 20));
+           g2.drawString("X", closeX + 8, closeY + 22);
+
+
+
+            // Border
+            g2.setColor(Color.WHITE);
+            g2.setStroke(new BasicStroke(3));
+            g2.drawRoundRect(x, y, width, height, 25, 25);
+
+            // Dialogue text
+            g2.setFont(new Font("Arial", Font.PLAIN, 20));
+            g2.setColor(Color.WHITE);
+
+            int textX = x + 20;
+            int textY = y + 35;
+
+            for (String line : dialogueText.split("\n")) {
+                g2.drawString(line, textX, textY);
+                textY += 25;
+            }
+
     }
 }
