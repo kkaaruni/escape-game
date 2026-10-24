@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class GamePanel extends JPanel implements Runnable{
 
-    final int originalTileSize = 32;
+    final int originalTileSize = 16;
     final int scale = 3;
 
     final int tileSize = originalTileSize * scale;
@@ -15,15 +15,15 @@ public class GamePanel extends JPanel implements Runnable{
     final int screenWidth = tileSize * maxScreenCol;
     final int screenHeight = tileSize * maxScreenRow;
 
+    // FPS
+    int FPS = 60;
+
     Thread gameThread;
     KeyHandler keyHandler = new KeyHandler();
 
     int playerX = 100;
     int playerY = 100;
     int playerSpeed = 4;
-
-    //FPS
-
 
 
     public GamePanel() {
@@ -32,8 +32,6 @@ public class GamePanel extends JPanel implements Runnable{
         this.setDoubleBuffered(true);
         this.addKeyListener(keyHandler);
         this.setFocusable( true );
-
-
     }
 
     public void startGameThread(){
@@ -44,17 +42,24 @@ public class GamePanel extends JPanel implements Runnable{
     @Override
     public void run() {
 
-    while(gameThread != null){
-        long currentTime = System.currentTimeMillis();
+        double drawInterval = 1000000000/FPS;
+        double delta = 0;
+        long lastTime = System.nanoTime();
+        long currentTime;
 
+        while(gameThread != null) {
 
-        //Update information such as character position
-        update();
+            currentTime = System.nanoTime();
 
-        //Draw the screen with the update information
-        repaint();
+            delta += (currentTime - lastTime) / drawInterval;
+            lastTime = currentTime;
 
-    }
+            if (delta >= 1) {
+                update();
+                repaint();
+                delta--;
+            }
+        }
 
     }
 
