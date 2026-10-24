@@ -1,5 +1,6 @@
 package main;
 
+import object.OBJ_diary;
 import object.SuperObject;
 
 import java.awt.event.MouseEvent;
@@ -31,6 +32,35 @@ public class MouseHandler implements MouseListener {
         int closeX = x + width - closeSize - 10;
         int closeY = y + 10;
 
+        if (gamePanel.diaryOpen) {
+            int buttonY = gamePanel.tileSize * 8
+                    + gamePanel.tileSize * 3 - 30;
+
+            int nextX = gamePanel.screenWidth
+                    - gamePanel.tileSize - 100;
+
+            int backX = gamePanel.screenWidth
+                    - gamePanel.tileSize - 190;
+
+            if (mouseY >= buttonY && mouseY <= buttonY + 35) {
+                if (gamePanel.diaryPage < gamePanel.diaryPages.length
+                        && mouseX >= nextX
+                        && mouseX <= nextX + 100) {
+                    gamePanel.diaryPage++;
+                    gamePanel.repaint();
+                    return;
+                }
+
+                if (gamePanel.diaryPage > 1
+                        && mouseX >= backX
+                        && mouseX <= backX + 100) {
+                    gamePanel.diaryPage--;
+                    gamePanel.repaint();
+                    return;
+                }
+            }
+        }
+
         // Check if close button was clicked
         if (gamePanel.dialogueOn &&
                 mouseX >= closeX && mouseX < closeX + closeSize &&
@@ -51,10 +81,18 @@ public class MouseHandler implements MouseListener {
 
                 gamePanel.dialogueText = obj.description;
                 gamePanel.dialogueOn = true;
+
+                if (obj instanceof OBJ_diary) {
+                    gamePanel.diaryOpen = true;
+                } else {
+                    gamePanel.diaryOpen = false;
+                }
+
                 gamePanel.repaint();
                 break;
             }
         }
+
 
     }
 

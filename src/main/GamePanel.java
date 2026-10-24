@@ -1,6 +1,7 @@
 package main;
 
 import entity.Player;
+import object.OBJ_diary;
 import object.SuperObject;
 import tile.TileManager;
 
@@ -34,6 +35,26 @@ public class GamePanel extends JPanel implements Runnable{
 
     public boolean dialogueOn = false;
     public String dialogueText = "";
+    public boolean diaryOpen = false;
+
+    public int diaryPage = 1;
+
+    public String[] diaryPages = {
+            "Dear diary,\n" +
+             "Today my wife and I dropped off Oliver for his first day of school .\n" +
+             "He looked so cute in his blue uniform.",
+
+            "Dear diary,\n" +
+                    "Today I went to see my mum. It's hard watching her struggle.\n" +
+                    "Regardless, Oliver said that my mum has beautiful red hair and wants to\n" +
+                    "look after his mum like how I look after mine.",
+
+            "Dear diary,\n" +
+            "Ronnie keeps asking for my research.\n" +
+                    "I want to help him but he's being so frustrating.\n" +
+                    "My wife passed away only 6 weeks ago and all he cares about\n" +
+                    "is my research on semaphores..."
+    };
 
     public GamePanel() {
         this.setPreferredSize( new Dimension( screenWidth, screenHeight ) );
@@ -98,6 +119,18 @@ public class GamePanel extends JPanel implements Runnable{
         // player
         player.draw(g2);
 
+        if (diaryOpen) {
+            for (SuperObject obj : object) {
+                if (obj instanceof OBJ_diary) {
+                    OBJ_diary diary = (OBJ_diary) obj;
+
+                    g2.drawImage(diary.openedImage,
+                            diary.worldX, diary.worldY,
+                            tileSize, tileSize, null);
+                }
+            }
+        }
+
         if (dialogueOn) {
             drawDialogueScreen(g2);
         }
@@ -138,13 +171,30 @@ public class GamePanel extends JPanel implements Runnable{
             g2.setFont(new Font("Arial", Font.PLAIN, 20));
             g2.setColor(Color.WHITE);
 
+            if (diaryOpen) {
+                if (diaryPage < diaryPages.length) {
+                 g2.drawString("Next >", x + width - 80, y + height - 10);
+                }
+
+            if (diaryPage > 1) {
+                g2.drawString("< Back", x + width - 170, y + height - 10);
+                }
+           }
+
+
             int textX = x + 20;
             int textY = y + 35;
 
-            for (String line : dialogueText.split("\n")) {
-                g2.drawString(line, textX, textY);
-                textY += 25;
-            }
+        String textToShow = dialogueText;
+
+        if (diaryOpen) {
+            textToShow = diaryPages[diaryPage - 1];
+        }
+
+        for (String line : textToShow.split("\n")) {
+            g2.drawString(line, textX, textY);
+            textY += 25;
+        }
 
     }
 }
