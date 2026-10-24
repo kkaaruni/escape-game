@@ -25,8 +25,15 @@ public class GamePanel extends JPanel implements Runnable{
     TileManager tileManager = new TileManager(this);
     Thread gameThread;
     public CollisionChecker collisionChecker = new CollisionChecker(this);
-    KeyHandler keyHandler = new KeyHandler();
+
+    public final int playState = 1;
+    public final int toyChoiceState = 2;
+    public final int toyViewState = 3;
+    public int gameState = playState;
+
+    public KeyHandler keyHandler = new KeyHandler(this);   // now takes the panel
     public Player player = new Player(this, keyHandler);
+    public UI ui = new UI(this);
 
     public SuperObject[] object =  new SuperObject[10];
     public AssetSetter assetSetter = new AssetSetter(this);
@@ -72,7 +79,9 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void update(){
-        player.update();
+        if (gameState == playState) {
+            player.update();
+        }
     }
 
     public void paintComponent(Graphics g){
@@ -92,6 +101,9 @@ public class GamePanel extends JPanel implements Runnable{
 
         // player
         player.draw(g2);
+
+        // UI
+        ui.draw(g2);
 
         g2.dispose();
     }

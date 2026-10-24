@@ -45,6 +45,21 @@ public class Player extends Entity {
         }
     }
 
+    public void interactWithObject(int i) {
+        if (i != 999) {
+            // constant first, so it won't crash if an object has no name set
+            if ("Toy box".equals(gamePanel.object[i].name)) {
+                keyHandler.upPressed = false;
+                keyHandler.downPressed = false;
+                keyHandler.leftPressed = false;
+                keyHandler.rightPressed = false;
+
+                gamePanel.ui.toyCommandNum = 0;
+                gamePanel.gameState = gamePanel.toyChoiceState;
+            }
+        }
+    }
+
     public void update() {
 
         if(keyHandler.upPressed == true || keyHandler.downPressed == true ||
@@ -59,10 +74,11 @@ public class Player extends Entity {
                 direction = "right";
             }
 
-            // Check tile collision
+            // Check tile and object collision
             collisionOn = false;
             gamePanel.collisionChecker.checkTile(this);
-            gamePanel.collisionChecker.checkObject(this, true);
+            int objIndex = gamePanel.collisionChecker.checkObject(this, true);
+            interactWithObject(objIndex);
 
             // If collision is false, player can move
             if (collisionOn == false) {
