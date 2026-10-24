@@ -30,12 +30,15 @@ public class GamePanel extends JPanel implements Runnable{
 
     public SuperObject[] object =  new SuperObject[10];
     public AssetSetter assetSetter = new AssetSetter(this);
+    MouseHandler mouseHandler = new MouseHandler(this);
 
     public GamePanel() {
         this.setPreferredSize( new Dimension( screenWidth, screenHeight ) );
         this.setBackground( Color.black );
         this.setDoubleBuffered(true);
         this.addKeyListener(keyHandler);
+        this.addMouseListener(mouseHandler);
+        this.addMouseMotionListener(mouseHandler);
         this.setFocusable( true );
     }
 
