@@ -8,12 +8,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Objects;
 
 public class TileManager {
 
     GamePanel gamePanel;
-    Tile[] tile;
-    int[][] mapTileNum;
+    public Tile[] tile;
+    public int[][] mapTileNum;
 
     public TileManager(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
@@ -27,13 +28,15 @@ public class TileManager {
     public void getTileImage() {
         try {
             tile[0] = new Tile();
-            tile[0].image = ImageIO.read(getClass().getResource("/tiles/floor.png"));
+            tile[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/tiles/floor.png")));
 
             tile[1] = new Tile();
-            tile[1].image = ImageIO.read(getClass().getResource("/tiles/wall.png"));
+            tile[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/tiles/wall.png")));
+            tile[1].collision = true;
 
             tile[2] = new Tile();
-            tile[2].image = ImageIO.read(getClass().getResource("/tiles/door.png"));
+            tile[2].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/tiles/door.png")));
+            tile[2].collision = true;
 
         } catch(IOException e) {
             e.printStackTrace();

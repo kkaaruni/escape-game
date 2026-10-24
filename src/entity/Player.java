@@ -16,6 +16,8 @@ public class Player extends Entity {
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
         this.gamePanel = gamePanel;
         this.keyHandler = keyHandler;
+
+        solidArea = new Rectangle(8, 16, 32, 32);
         setDefaultValues();
         getPlayerImage();
     }
@@ -49,16 +51,34 @@ public class Player extends Entity {
             keyHandler.leftPressed == true || keyHandler.rightPressed == true) {
             if(keyHandler.upPressed){
                 direction = "up";
-                y -= speed;
             }else if(keyHandler.downPressed){
                 direction = "down";
-                y += speed;
             } else if(keyHandler.leftPressed){
                 direction = "left";
-                x -= speed;
             } else if(keyHandler.rightPressed){
                 direction = "right";
-                x += speed;
+            }
+
+            // Check tile collision
+            collisionOn = false;
+            gamePanel.collisionChecker.checkTile(this);
+
+            // If collision is false, player can move
+            if (collisionOn == false) {
+                switch(direction) {
+                    case "up":
+                        y -= speed;
+                        break;
+                    case "down":
+                        y += speed;
+                        break;
+                    case "left":
+                        x -= speed;
+                        break;
+                    case "right":
+                        x += speed;
+                        break;
+                }
             }
 
             spriteCounter++;
