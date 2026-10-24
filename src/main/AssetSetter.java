@@ -1,9 +1,6 @@
 package main;
 
-import object.OBJ_PostItNote;
-import object.OBJ_diary;
-import object.OBJ_toy_box;
-import object.SuperObject;
+import object.*;
 
 public class AssetSetter {
     GamePanel gamePanel;
@@ -24,6 +21,14 @@ public class AssetSetter {
         gamePanel.object[2] = new OBJ_PostItNote();
         gamePanel.object[2].worldX = 12 * gamePanel.tileSize;
         gamePanel.object[2].worldY = 0 * gamePanel.tileSize;
+
+        gamePanel.object[3] = new OBJ_barrel();
+        gamePanel.object[3].worldX = 1 * gamePanel.tileSize;
+        gamePanel.object[3].worldY = 1 * gamePanel.tileSize;
+
+        gamePanel.object[4] = new OBJ_first_aid_kit();
+        gamePanel.object[4].worldX = 1 * gamePanel.tileSize;
+        gamePanel.object[4].worldY = 10 * gamePanel.tileSize;
 
 
     }
