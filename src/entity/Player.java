@@ -13,15 +13,9 @@ public class Player extends Entity {
     GamePanel gamePanel;
     KeyHandler keyHandler;
 
-    public final int screenX;
-    public final int screenY;
-
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
         this.gamePanel = gamePanel;
         this.keyHandler = keyHandler;
-
-        screenX = gamePanel.screenWidth/2;
-        screenY = gamePanel.screenHeight/2;
 
         solidArea = new Rectangle(8, 16, 32, 32);
         setDefaultValues();

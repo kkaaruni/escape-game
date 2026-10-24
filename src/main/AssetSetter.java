@@ -12,7 +12,7 @@ public class AssetSetter {
 
     public void setObject() {
         gamePanel.object[0] = new OBJ_diary();
-        gamePanel.object[0].worldX = 10 * gamePanel.tileSize;
+        gamePanel.object[0].worldX = 6 * gamePanel.tileSize;
         gamePanel.object[0].worldY = 5 * gamePanel.tileSize;
 
     }
