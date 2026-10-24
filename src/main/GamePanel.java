@@ -26,9 +26,9 @@ public class GamePanel extends JPanel implements Runnable{
     Thread gameThread;
     public CollisionChecker collisionChecker = new CollisionChecker(this);
     KeyHandler keyHandler = new KeyHandler();
-    Player player = new Player(this, keyHandler);
+    public Player player = new Player(this, keyHandler);
 
-    public SuperObject object[] =  new SuperObject[10];
+    public SuperObject[] object =  new SuperObject[10];
     public AssetSetter assetSetter = new AssetSetter(this);
 
     public GamePanel() {
@@ -80,14 +80,18 @@ public class GamePanel extends JPanel implements Runnable{
 
         Graphics2D g2 = (Graphics2D) g;
 
+        // tile
         tileManager.draw(g2);
-        player.draw(g2);
 
+        // object
         for(int i = 0; i < object.length; i++) {
             if(object[i] != null) {
                 object[i].draw(g2, this);
             }
         }
+
+        // player
+        player.draw(g2);
 
         g2.dispose();
     }
