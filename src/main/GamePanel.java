@@ -34,6 +34,10 @@ public class GamePanel extends JPanel implements Runnable{
     public final int codeEntryState = 5;
     public final int diaryState = 6;
     public boolean toyBoxUnlocked = false;
+    public final int passwordState = 7;
+    public final int computerMenuState = 8;
+    public final int computerViewState = 9;
+    public boolean computerUnlocked = false;
 
     public KeyHandler keyHandler = new KeyHandler(this);   // now takes the panel
     public Player player = new Player(this, keyHandler);

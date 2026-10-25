@@ -48,7 +48,7 @@ public class KeyHandler implements KeyListener {
                 gp.ui.codeInput += c;
                 gp.ui.codeMessage = "";
             }
-            if (code == KeyEvent.VK_BACK_SPACE && gp.ui.codeInput.length() > 0) {
+            if (code == KeyEvent.VK_BACK_SPACE && !gp.ui.codeInput.isEmpty()) {
                 gp.ui.codeInput = gp.ui.codeInput.substring(0, gp.ui.codeInput.length() - 1);
             }
             if (code == KeyEvent.VK_ENTER) {
@@ -78,6 +78,41 @@ public class KeyHandler implements KeyListener {
                 gp.ui.currentDiary.image = gp.ui.currentDiary.closedImage;   // back to closed
                 gp.gameState = gp.playState;
             }
+        }
+
+        else if (gp.gameState == gp.passwordState) {
+            char c = e.getKeyChar();
+
+            if (Character.isLetterOrDigit(c) && gp.ui.passwordInput.length() < 20) {
+                gp.ui.passwordInput += c;
+                gp.ui.passwordMessage = "";
+            }
+            if (code == KeyEvent.VK_BACK_SPACE && !gp.ui.passwordInput.isEmpty()) {
+                gp.ui.passwordInput = gp.ui.passwordInput.substring(0, gp.ui.passwordInput.length() - 1);
+            }
+            if (code == KeyEvent.VK_ENTER) {
+                if (gp.ui.passwordInput.equalsIgnoreCase("deadlock")) {
+                    gp.computerUnlocked = true;
+                    gp.ui.computerCommandNum = 0;
+                    gp.gameState = gp.computerMenuState;
+                } else {
+                    gp.ui.passwordMessage = "Incorrect password.";
+                    gp.ui.passwordInput = "";
+                }
+            }
+            if (code == KeyEvent.VK_ESCAPE) gp.gameState = gp.playState;
+        }
+        else if (gp.gameState == gp.computerMenuState) {
+            if (code == KeyEvent.VK_W) gp.ui.computerCommandNum = (gp.ui.computerCommandNum + 1) % 2;
+            if (code == KeyEvent.VK_S) gp.ui.computerCommandNum = (gp.ui.computerCommandNum + 1) % 2;
+            if (code == KeyEvent.VK_ENTER) {
+                gp.ui.computerScreen = gp.ui.computerCommandNum;
+                gp.gameState = gp.computerViewState;
+            }
+            if (code == KeyEvent.VK_ESCAPE) gp.gameState = gp.playState;
+        }
+        else if (gp.gameState == gp.computerViewState) {
+            if (code == KeyEvent.VK_ESCAPE) gp.gameState = gp.computerMenuState;
         }
     }
 
