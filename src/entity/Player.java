@@ -1,0 +1,197 @@
+package entity;
+
+import main.GamePanel;
+import main.KeyHandler;
+import object.OBJ_diary;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.Objects;
+
+public class Player extends Entity {
+    GamePanel gamePanel;
+    KeyHandler keyHandler;
+
+    public Player(GamePanel gamePanel, KeyHandler keyHandler) {
+        this.gamePanel = gamePanel;
+        this.keyHandler = keyHandler;
+
+        solidArea = new Rectangle(8, 16, 32, 32);
+        setDefaultValues();
+        getPlayerImage();
+    }
+
+    public void setDefaultValues() {
+        x = 100;
+        y = 100;
+        speed = 4;
+        direction = "down";
+    }
+
+    public void getPlayerImage() {
+        try {
+            up1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/man_up_1.png")));
+            up2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/man_up_2.png")));
+            down1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/man_down_1.png")));
+            down2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/man_down_2.png")));
+            left1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/man_left_1.png")));
+            left2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/man_left_2.png")));
+            right1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/man_right_1.png")));
+            right2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/man_right_2.png")));
+
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void interactWithObject(int i) {
+        if (i == 999) return;
+
+        String name = gamePanel.object[i].name;
+        if (name == null) return;
+
+        // stop the player walking while a screen is open
+        keyHandler.upPressed = false;
+        keyHandler.downPressed = false;
+        keyHandler.leftPressed = false;
+        keyHandler.rightPressed = false;
+
+        switch (name) {
+            case "Toy box":
+                if (gamePanel.toyBoxUnlocked) {
+                    gamePanel.ui.toyCommandNum = 0;
+                    gamePanel.gameState = gamePanel.toyChoiceState;
+                } else {
+                    gamePanel.ui.codeInput = "";
+                    gamePanel.ui.codeMessage = "";
+                    gamePanel.gameState = gamePanel.codeEntryState;
+                }
+                break;
+            case "Post It Note":
+                gamePanel.ui.currentMessage = "The note reads:\n\"" + gamePanel.object[i].message + "\"";
+                gamePanel.gameState = gamePanel.messageState;
+                break;
+            case "Closed Diary":
+                OBJ_diary diary = (OBJ_diary) gamePanel.object[i];
+                diary.image = diary.openedImage;
+                gamePanel.ui.currentDiary = diary;
+                gamePanel.ui.diaryPage = 0;
+                gamePanel.gameState = gamePanel.diaryState;
+                break;
+            case "Computer":
+                if (gamePanel.computerUnlocked) {
+                    gamePanel.ui.computerCommandNum = 0;
+                    gamePanel.gameState = gamePanel.computerMenuState;
+                } else {
+                    gamePanel.ui.passwordInput = "";
+                    gamePanel.ui.passwordMessage = "";
+                    gamePanel.gameState = gamePanel.passwordState;
+                }
+                break;
+
+            case "Door":
+                gamePanel.ui.codeInput = "";
+                gamePanel.ui.codeMessage = "";
+                gamePanel.gameState = gamePanel.doorState;
+                break;
+
+            default:
+                // other objects: no keys cleared needed, but harmless
+                break;
+        }
+    }
+
+    public void update() {
+
+        if(keyHandler.upPressed == true || keyHandler.downPressed == true ||
+            keyHandler.leftPressed == true || keyHandler.rightPressed == true) {
+            if(keyHandler.upPressed){
+                direction = "up";
+            }else if(keyHandler.downPressed){
+                direction = "down";
+            } else if(keyHandler.leftPressed){
+                direction = "left";
+            } else if(keyHandler.rightPressed){
+                direction = "right";
+            }
+
+            // Check tile and object collision
+            collisionOn = false;
+            gamePanel.collisionChecker.checkTile(this);
+            int objIndex = gamePanel.collisionChecker.checkObject(this, true);
+            interactWithObject(objIndex);
+
+            // If collision is false, player can move
+            if (collisionOn == false) {
+                switch(direction) {
+                    case "up":
+                        y -= speed;
+                        break;
+                    case "down":
+                        y += speed;
+                        break;
+                    case "left":
+                        x -= speed;
+                        break;
+                    case "right":
+                        x += speed;
+                        break;
+                }
+            }
+
+            spriteCounter++;
+            if(spriteCounter > 12) {
+                if(spriteNum == 1) {
+                    spriteNum = 2;
+                }
+                else if(spriteNum == 2) {
+                    spriteNum = 1;
+                }
+                spriteCounter = 0;
+            }
+        }
+
+    }
+
+    public void draw(Graphics2D g2) {
+        BufferedImage image = null;
+
+        switch(direction) {
+            case "up":
+                if(spriteNum == 1) {
+                    image = up1;
+                }
+                if(spriteNum == 2) {
+                    image = up2;
+                }
+                break;
+            case "down":
+                if(spriteNum == 1) {
+                    image = down1;
+                }
+                if(spriteNum == 2) {
+                    image = down2;
+                }
+                break;
+            case "left":
+                if(spriteNum == 1) {
+                    image = left1;
+                }
+                if(spriteNum == 2) {
+                    image = left2;
+                }
+                break;
+            case "right":
+                if(spriteNum == 1) {
+                    image = right1;
+                }
+                if(spriteNum == 2) {
+                    image = right2;
+                }
+                break;
+        }
+        g2.drawImage(image, x, y, gamePanel.tileSize, gamePanel.tileSize, null);
+    }
+}
