@@ -70,7 +70,7 @@ public class Player extends Entity {
                 }
                 break;
             case "Post It Note":
-                gamePanel.ui.currentMessage = "The note reads:\n\"Buy Oliver a toy horse.\"";
+                gamePanel.ui.currentMessage = "The note reads:\n\"" + gamePanel.object[i].message + "\"";
                 gamePanel.gameState = gamePanel.messageState;
                 break;
             case "Closed Diary":

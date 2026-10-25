@@ -41,13 +41,13 @@ public class UI {
 
     public void draw(Graphics2D g2) {
         if (gp.gameState == gp.messageState) {
-            int w = 450, h = 140;
+            int w = 450, h = 160;
             int x = (gp.screenWidth - w) / 2, y = (gp.screenHeight - h) / 2;
             g2.setColor(new Color(0, 0, 0, 200));
             g2.fillRoundRect(x, y, w, h, 25, 25);
 
             g2.setColor(Color.WHITE);
-            g2.setFont(g2.getFont().deriveFont(24F));
+            g2.setFont(g2.getFont().deriveFont(16F));
             int ty = y + 50;
             for (String line : currentMessage.split("\n")) {
                 g2.drawString(line, x + 30, ty);
@@ -117,7 +117,7 @@ public class UI {
         if (gp.gameState == gp.diaryState && currentDiary != null) {
             int w = 560, h = 220;
             int x = (gp.screenWidth - w) / 2, y = (gp.screenHeight - h) / 2;
-            g2.setColor(new Color(0, 0, 0, 220));
+            g2.setColor(new Color(0, 0, 0, 200));
             g2.fillRoundRect(x, y, w, h, 25, 25);
 
             g2.setColor(Color.WHITE);

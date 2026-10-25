@@ -20,7 +20,7 @@ public class AssetSetter {
         gamePanel.object[1].worldY = 5 * gamePanel.tileSize;
         gamePanel.object[1].collision = true;
 
-        gamePanel.object[2] = new OBJ_PostItNote();
+        gamePanel.object[2] = new OBJ_PostItNote("Buy Oliver a toy horse.");
         gamePanel.object[2].worldX = 12 * gamePanel.tileSize;
         gamePanel.object[2].worldY = (int) (0.2 * gamePanel.tileSize);
         gamePanel.object[2].collision = true;
@@ -39,6 +39,12 @@ public class AssetSetter {
         gamePanel.object[5].worldX = 15 * gamePanel.tileSize;
         gamePanel.object[5].worldY = 8 * gamePanel.tileSize;
         gamePanel.object[5].collision = true;
+
+        gamePanel.object[6] = new OBJ_PostItNote("Ronnie waits for the research held by Brian, while Brian\n" +
+                                                 "waits for the research held by Ronnie.");
+        gamePanel.object[6].worldX = (int) (0.1 * gamePanel.tileSize);
+        gamePanel.object[6].worldY = 7 * gamePanel.tileSize;
+        gamePanel.object[6].collision = true;
 
 
     }
