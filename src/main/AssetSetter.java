@@ -46,6 +46,11 @@ public class AssetSetter {
         gamePanel.object[6].worldY = 7 * gamePanel.tileSize;
         gamePanel.object[6].collision = true;
 
+        gamePanel.object[7] = new OBJ_computer();
+        gamePanel.object[7].worldX = 4 * gamePanel.tileSize;
+        gamePanel.object[7].worldY = 8 * gamePanel.tileSize;
+        gamePanel.object[7].collision = true;
+
 
     }
 }
