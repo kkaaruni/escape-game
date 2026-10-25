@@ -2,6 +2,7 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
+import object.OBJ_diary;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -71,6 +72,13 @@ public class Player extends Entity {
             case "Post It Note":
                 gamePanel.ui.currentMessage = "The note reads:\n\"Buy Oliver a toy horse.\"";
                 gamePanel.gameState = gamePanel.messageState;
+                break;
+            case "Closed Diary":
+                OBJ_diary diary = (OBJ_diary) gamePanel.object[i];
+                diary.image = diary.openedImage;
+                gamePanel.ui.currentDiary = diary;
+                gamePanel.ui.diaryPage = 0;
+                gamePanel.gameState = gamePanel.diaryState;
                 break;
             default:
                 // other objects: no keys cleared needed, but harmless

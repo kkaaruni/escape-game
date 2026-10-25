@@ -1,5 +1,7 @@
 package main;
 
+import object.OBJ_diary;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -13,6 +15,8 @@ public class UI {
     public String currentMessage = "";
     public String codeInput = "";
     public String codeMessage = "";
+    public OBJ_diary currentDiary;
+    public int diaryPage = 0;
 
     BufferedImage[] toyImages = new BufferedImage[3];
     String[] toyNames = {"Bear", "Duck", "Horse"};
@@ -108,6 +112,26 @@ public class UI {
                 ty += 26;
             }
             g2.drawString("[Esc] Back", x + 30, y + h - 20);
+        }
+
+        if (gp.gameState == gp.diaryState && currentDiary != null) {
+            int w = 560, h = 220;
+            int x = (gp.screenWidth - w) / 2, y = (gp.screenHeight - h) / 2;
+            g2.setColor(new Color(0, 0, 0, 220));
+            g2.fillRoundRect(x, y, w, h, 25, 25);
+
+            g2.setColor(Color.WHITE);
+            g2.setFont(g2.getFont().deriveFont(18F));
+            int ty = y + 45;
+            for (String line : currentDiary.diaryPages[diaryPage].split("\n")) {
+                g2.drawString(line, x + 30, ty);
+                ty += 26;
+            }
+
+            g2.setFont(g2.getFont().deriveFont(14F));
+            g2.drawString("Page " + (diaryPage + 1) + " / " + currentDiary.diaryPages.length,
+                    x + 30, y + h - 40);
+            g2.drawString("[A/D] Turn page   [Esc] Close", x + 30, y + h - 15);
         }
     }
 }

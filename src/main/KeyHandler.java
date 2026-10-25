@@ -65,6 +65,20 @@ public class KeyHandler implements KeyListener {
                 gp.gameState = gp.playState;
             }
         }
+        else if (gp.gameState == gp.diaryState) {
+            int pages = gp.ui.currentDiary.diaryPages.length;
+
+            if ((code == KeyEvent.VK_D) && gp.ui.diaryPage < pages - 1) {
+                gp.ui.diaryPage++;
+            }
+            if ((code == KeyEvent.VK_A) && gp.ui.diaryPage > 0) {
+                gp.ui.diaryPage--;
+            }
+            if (code == KeyEvent.VK_ESCAPE) {
+                gp.ui.currentDiary.image = gp.ui.currentDiary.closedImage;   // back to closed
+                gp.gameState = gp.playState;
+            }
+        }
     }
 
     @Override
