@@ -43,13 +43,28 @@ public class AssetSetter {
         gamePanel.object[6] = new OBJ_PostItNote("Ronnie waits for the research held by Brian, while Brian\n" +
                                                  "waits for the research held by Ronnie.");
         gamePanel.object[6].worldX = (int) (0.1 * gamePanel.tileSize);
-        gamePanel.object[6].worldY = 7 * gamePanel.tileSize;
+        gamePanel.object[6].worldY = 6 * gamePanel.tileSize;
         gamePanel.object[6].collision = true;
 
         gamePanel.object[7] = new OBJ_computer();
         gamePanel.object[7].worldX = 4 * gamePanel.tileSize;
         gamePanel.object[7].worldY = 8 * gamePanel.tileSize;
         gamePanel.object[7].collision = true;
+
+        gamePanel.object[8] = new OBJ_first_aid_kit();
+        gamePanel.object[8].worldX = 7 * gamePanel.tileSize;
+        gamePanel.object[8].worldY = 4 * gamePanel.tileSize;
+        gamePanel.object[8].collision = true;
+
+        gamePanel.object[9] = new OBJ_barrel();
+        gamePanel.object[9].worldX = 10 * gamePanel.tileSize;
+        gamePanel.object[9].worldY = 7 * gamePanel.tileSize;
+        gamePanel.object[9].collision = true;
+
+        gamePanel.object[10] = new OBJ_newspaper();
+        gamePanel.object[10].worldX = 1 * gamePanel.tileSize;
+        gamePanel.object[10].worldY = 1 * gamePanel.tileSize;
+        gamePanel.object[10].collision = true;
 
 
     }
