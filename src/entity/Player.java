@@ -45,10 +45,52 @@ public class Player extends Entity {
         }
     }
 
+    public void interactWithObject(int i) {
+
+        if (i == 999 || i < 0 || i >= gamePanel.object.length
+                || gamePanel.object[i] == null) {
+            return;
+        }
+
+        String name = gamePanel.object[i].name;
+        if (name == null) return;
+
+        // Stop movement when interacting
+        keyHandler.upPressed = false;
+        keyHandler.downPressed = false;
+        keyHandler.leftPressed = false;
+        keyHandler.rightPressed = false;
+
+        switch (name) {
+
+            case "Toy box":
+                gamePanel.ui.toyCommandNum = 0;
+                gamePanel.gameState = gamePanel.toyChoiceState;
+                break;
+
+            case "Post It Note":
+                gamePanel.ui.currentMessage =
+                        "The note reads:\n\"Buy Oliver a toy horse.\"";
+                gamePanel.gameState = gamePanel.messageState;
+                break;
+
+            case "Closed Diary":
+                if (keyHandler.interactPressed) {
+                    gamePanel.diaryOpen = true;
+                    gamePanel.dialogueOn = true;
+                    gamePanel.diaryPage = 1;
+                    gamePanel.dialogueText = gamePanel.diaryPages[0];
+                    gamePanel.gameState = gamePanel.diaryState;
+
+                    keyHandler.interactPressed = false;
+                }
+                break;
+        }
+    }
     public void update() {
 
         if(keyHandler.upPressed == true || keyHandler.downPressed == true ||
-            keyHandler.leftPressed == true || keyHandler.rightPressed == true) {
+                keyHandler.leftPressed == true || keyHandler.rightPressed == true) {
             if(keyHandler.upPressed){
                 direction = "up";
             }else if(keyHandler.downPressed){
@@ -59,10 +101,12 @@ public class Player extends Entity {
                 direction = "right";
             }
 
-            // Check tile collision
+            // Check tile and object collision
             collisionOn = false;
             gamePanel.collisionChecker.checkTile(this);
-            gamePanel.collisionChecker.checkObject(this, true);
+
+            gamePanel.collisionChecker.checkObject(this, true);;
+
 
             // If collision is false, player can move
             if (collisionOn == false) {
@@ -92,6 +136,18 @@ public class Player extends Entity {
                 }
                 spriteCounter = 0;
             }
+        }
+
+        if (keyHandler.interactPressed) {
+            collisionOn = false;
+
+            int objIndex = gamePanel.collisionChecker.checkObject(this, true);
+
+            System.out.println("Interact pressed. Object index: " + objIndex);
+
+            interactWithObject(objIndex);
+
+            keyHandler.interactPressed = false;
         }
 
     }
