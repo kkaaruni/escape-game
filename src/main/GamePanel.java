@@ -18,7 +18,6 @@ public class GamePanel extends JPanel implements Runnable{
 
     public final int screenWidth = tileSize * maxScreenCol;
     public final int screenHeight = tileSize * maxScreenRow;
-    public int winState = 8;
 
     // FPS
     int FPS = 60;
@@ -35,7 +34,12 @@ public class GamePanel extends JPanel implements Runnable{
     public final int codeEntryState = 5;
     public final int diaryState = 6;
     public boolean toyBoxUnlocked = false;
-    public final int  doorState = 7;
+    public final int passwordState = 7;
+    public final int computerMenuState = 8;
+    public final int computerViewState = 9;
+    public boolean computerUnlocked = false;
+    public final int  doorState = 10;
+    public int winState = 11;
 
     public KeyHandler keyHandler = new KeyHandler(this);   // now takes the panel
     public Player player = new Player(this, keyHandler);

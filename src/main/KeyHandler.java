@@ -23,7 +23,8 @@ public class KeyHandler implements KeyListener {
             if (code == KeyEvent.VK_S) downPressed = true;
             if (code == KeyEvent.VK_A) leftPressed = true;
             if (code == KeyEvent.VK_D) rightPressed = true;
-        } else if (gp.gameState == gp.toyChoiceState) {
+        }
+        else if (gp.gameState == gp.toyChoiceState) {
             if (code == KeyEvent.VK_W) gp.ui.toyCommandNum = (gp.ui.toyCommandNum + 2) % 3;
             if (code == KeyEvent.VK_S) gp.ui.toyCommandNum = (gp.ui.toyCommandNum + 1) % 3;
             if (code == KeyEvent.VK_ENTER) {
@@ -31,13 +32,16 @@ public class KeyHandler implements KeyListener {
                 gp.gameState = gp.toyViewState;
             }
             if (code == KeyEvent.VK_ESCAPE) gp.gameState = gp.playState;
-        } else if (gp.gameState == gp.toyViewState) {
+        }
+        else if (gp.gameState == gp.toyViewState) {
             if (code == KeyEvent.VK_ESCAPE) gp.gameState = gp.toyChoiceState;
-        } else if (gp.gameState == gp.messageState) {
+        }
+        else if (gp.gameState == gp.messageState) {
             if (code == KeyEvent.VK_ESCAPE) {
                 gp.gameState = gp.playState;
             }
-        } else if (gp.gameState == gp.codeEntryState) {
+        }
+        else if (gp.gameState == gp.codeEntryState) {
             char c = e.getKeyChar();
 
             if (c >= '0' && c <= '9' && gp.ui.codeInput.length() < 4) {
@@ -105,7 +109,42 @@ public class KeyHandler implements KeyListener {
                     gp.gameState = gp.playState;
                 }
             }
+        else if (gp.gameState == gp.passwordState) {
+            char c = e.getKeyChar();
+
+            if (Character.isLetterOrDigit(c) && gp.ui.passwordInput.length() < 20) {
+                gp.ui.passwordInput += c;
+                gp.ui.passwordMessage = "";
+            }
+            if (code == KeyEvent.VK_BACK_SPACE && !gp.ui.passwordInput.isEmpty()) {
+                gp.ui.passwordInput = gp.ui.passwordInput.substring(0, gp.ui.passwordInput.length() - 1);
+            }
+            if (code == KeyEvent.VK_ENTER) {
+                if (gp.ui.passwordInput.equalsIgnoreCase("deadlock")) {
+                    gp.computerUnlocked = true;
+                    gp.ui.computerCommandNum = 0;
+                    gp.gameState = gp.computerMenuState;
+                } else {
+                    gp.ui.passwordMessage = "Incorrect password.";
+                    gp.ui.passwordInput = "";
+                }
+            }
+            if (code == KeyEvent.VK_ESCAPE) gp.gameState = gp.playState;
         }
+        else if (gp.gameState == gp.computerMenuState) {
+            if (code == KeyEvent.VK_W) gp.ui.computerCommandNum = (gp.ui.computerCommandNum + 1) % 2;
+            if (code == KeyEvent.VK_S) gp.ui.computerCommandNum = (gp.ui.computerCommandNum + 1) % 2;
+            if (code == KeyEvent.VK_ENTER) {
+                gp.ui.computerScreen = gp.ui.computerCommandNum;
+                gp.gameState = gp.computerViewState;
+            }
+            if (code == KeyEvent.VK_ESCAPE) gp.gameState = gp.playState;
+        }
+        else if (gp.gameState == gp.computerViewState) {
+            if (code == KeyEvent.VK_ESCAPE) gp.gameState = gp.computerMenuState;
+        }
+
+    }
 
     @Override
     public void keyReleased(KeyEvent e) {

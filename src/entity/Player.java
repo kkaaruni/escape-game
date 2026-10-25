@@ -80,6 +80,16 @@ public class Player extends Entity {
                 gamePanel.ui.diaryPage = 0;
                 gamePanel.gameState = gamePanel.diaryState;
                 break;
+            case "Computer":
+                if (gamePanel.computerUnlocked) {
+                    gamePanel.ui.computerCommandNum = 0;
+                    gamePanel.gameState = gamePanel.computerMenuState;
+                } else {
+                    gamePanel.ui.passwordInput = "";
+                    gamePanel.ui.passwordMessage = "";
+                    gamePanel.gameState = gamePanel.passwordState;
+                }
+                break;
 
             case "Door":
                 gamePanel.ui.codeInput = "";
