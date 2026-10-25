@@ -23,8 +23,7 @@ public class KeyHandler implements KeyListener {
             if (code == KeyEvent.VK_S) downPressed = true;
             if (code == KeyEvent.VK_A) leftPressed = true;
             if (code == KeyEvent.VK_D) rightPressed = true;
-        }
-        else if (gp.gameState == gp.toyChoiceState) {
+        } else if (gp.gameState == gp.toyChoiceState) {
             if (code == KeyEvent.VK_W) gp.ui.toyCommandNum = (gp.ui.toyCommandNum + 2) % 3;
             if (code == KeyEvent.VK_S) gp.ui.toyCommandNum = (gp.ui.toyCommandNum + 1) % 3;
             if (code == KeyEvent.VK_ENTER) {
@@ -32,16 +31,13 @@ public class KeyHandler implements KeyListener {
                 gp.gameState = gp.toyViewState;
             }
             if (code == KeyEvent.VK_ESCAPE) gp.gameState = gp.playState;
-        }
-        else if (gp.gameState == gp.toyViewState) {
+        } else if (gp.gameState == gp.toyViewState) {
             if (code == KeyEvent.VK_ESCAPE) gp.gameState = gp.toyChoiceState;
-        }
-        else if (gp.gameState == gp.messageState) {
+        } else if (gp.gameState == gp.messageState) {
             if (code == KeyEvent.VK_ESCAPE) {
                 gp.gameState = gp.playState;
             }
-        }
-        else if (gp.gameState == gp.codeEntryState) {
+        } else if (gp.gameState == gp.codeEntryState) {
             char c = e.getKeyChar();
 
             if (c >= '0' && c <= '9' && gp.ui.codeInput.length() < 4) {
@@ -64,22 +60,52 @@ public class KeyHandler implements KeyListener {
             if (code == KeyEvent.VK_ESCAPE) {
                 gp.gameState = gp.playState;
             }
-        }
-        else if (gp.gameState == gp.diaryState) {
-            int pages = gp.ui.currentDiary.diaryPages.length;
+        } else if (gp.gameState == gp.doorState) {
+            char c = e.getKeyChar();
 
-            if ((code == KeyEvent.VK_D) && gp.ui.diaryPage < pages - 1) {
-                gp.ui.diaryPage++;
+            if (c >= '0' && c <= '9' && gp.ui.codeInput.length() < 4) {
+                gp.ui.codeInput += c;
+                gp.ui.codeMessage = "";
             }
-            if ((code == KeyEvent.VK_A) && gp.ui.diaryPage > 0) {
-                gp.ui.diaryPage--;
+
+            if (code == KeyEvent.VK_BACK_SPACE
+                    && gp.ui.codeInput.length() > 0) {
+                gp.ui.codeInput = gp.ui.codeInput.substring(
+                        0, gp.ui.codeInput.length() - 1);
             }
+
+            if (code == KeyEvent.VK_ENTER) {
+                if (gp.ui.codeInput.equals("2810")) {
+                    gp.ui.codeInput = "";
+                    gp.ui.codeMessage = "";
+                    gp.gameState = gp.winState;
+                } else {
+                    gp.ui.codeMessage = "Wrong code.";
+                    gp.ui.codeInput = "";
+                }
+            }
+
             if (code == KeyEvent.VK_ESCAPE) {
-                gp.ui.currentDiary.image = gp.ui.currentDiary.closedImage;   // back to closed
+                gp.ui.codeInput = "";
+                gp.ui.codeMessage = "";
                 gp.gameState = gp.playState;
             }
+
+        } else if (gp.gameState == gp.diaryState) {
+                int pages = gp.ui.currentDiary.diaryPages.length;
+
+                if ((code == KeyEvent.VK_D) && gp.ui.diaryPage < pages - 1) {
+                    gp.ui.diaryPage++;
+                }
+                if ((code == KeyEvent.VK_A) && gp.ui.diaryPage > 0) {
+                    gp.ui.diaryPage--;
+                }
+                if (code == KeyEvent.VK_ESCAPE) {
+                    gp.ui.currentDiary.image = gp.ui.currentDiary.closedImage;   // back to closed
+                    gp.gameState = gp.playState;
+                }
+            }
         }
-    }
 
     @Override
     public void keyReleased(KeyEvent e) {

@@ -133,5 +133,51 @@ public class UI {
                     x + 30, y + h - 40);
             g2.drawString("[A/D] Turn page   [Esc] Close", x + 30, y + h - 15);
         }
+
+        if(gp.gameState == gp.doorState) {
+            int w = 400; int h  = 200;
+            int x = (gp.screenWidth - w) / 2;
+            int y  = (gp.screenHeight - h) / 2;
+
+            g2.setColor(new Color(0, 0, 0, 200));
+            g2.fillRoundRect(x, y, w, h, 25, 25);
+
+            g2.setColor(Color.WHITE);
+            g2.setFont(g2.getFont().deriveFont(18F));
+            g2.drawString("The door is locked. Enter the code:", x + 30, y + 45);
+
+            // show 4 slots, filled with typed digits
+            g2.setFont(g2.getFont().deriveFont(18F));
+            for (int i = 0; i < 4; i++) {
+                String c = i < codeInput.length() ? String.valueOf(codeInput.charAt(i)) : "_";
+                g2.drawString(c, x + 110 + i * 50, y + 100);
+            }
+
+            g2.setFont(g2.getFont().deriveFont(16F));
+            g2.setColor(Color.RED);
+            g2.drawString(codeMessage, x + 30, y + 130);
+            g2.setColor(Color.WHITE);
+            g2.drawString("[Enter] Confirm   [Backspace] Delete   [Esc] Cancel", x + 30, y + h - 15);
+
+        }
+
+        if (gp.gameState == gp.winState) {
+            int w = 500;
+            int h = 200;
+            int x = (gp.screenWidth - w) / 2;
+            int y = (gp.screenHeight - h) / 2;
+
+            g2.setColor(new Color(0, 0, 0, 200));
+            g2.fillRoundRect(x, y, w, h, 25, 25);
+
+            g2.setColor(Color.WHITE);
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 30F));
+            g2.drawString("CONGRATULATIONS!", x + 80, y + 60);
+
+            g2.setFont(g2.getFont().deriveFont(22F));
+            g2.drawString("You escaped!", x + 160, y + 110);
+
+
+        }
     }
 }

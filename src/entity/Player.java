@@ -80,6 +80,13 @@ public class Player extends Entity {
                 gamePanel.ui.diaryPage = 0;
                 gamePanel.gameState = gamePanel.diaryState;
                 break;
+
+            case "Door":
+                gamePanel.ui.codeInput = "";
+                gamePanel.ui.codeMessage = "";
+                gamePanel.gameState = gamePanel.doorState;
+                break;
+
             default:
                 // other objects: no keys cleared needed, but harmless
                 break;
